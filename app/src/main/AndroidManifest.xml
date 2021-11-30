@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SuperAnalitico">
         <activity
+            android:name=".UserAnalyticActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
