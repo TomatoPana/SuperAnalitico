@@ -1,13 +1,23 @@
 package com.example.superanalitico;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     EditText emailText;
     EditText passwordText;
     Button loginButton;
+    FirebaseAuth mAuth;
 
     public void setLoginStatus(String email, String password) {
         if(isLogged) {
@@ -31,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
+
         loginButton = findViewById(R.id.button);
         emailText = findViewById(R.id.editTextTextEmailAddress);
         passwordText = findViewById(R.id.editTextTextPassword);
@@ -64,7 +78,26 @@ public class MainActivity extends AppCompatActivity {
 
                 dataWriter.putString("email", email);
                 dataWriter.putString("password", password);
-                setLoginStatus(email, password);
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d("Login", "signInWithEmail:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    // Iniciar nueva actividad
+                                    Intent userActivity = new Intent(MainActivity.this, UserActivity.class);
+                                    startActivity(userActivity);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w("Login", "signInWithEmail:failure", task.getException());
+                                    Toast.makeText(MainActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                    // mostrar error
+                                }
+                            }
+                        });
 
             } else {
                 dataWriter.clear();
@@ -73,5 +106,20 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            // Obtener informacion del usuario e iniciar la actividad correspondiente
+            Intent userActivity = new Intent(MainActivity.this, UserActivity.class);
+            startActivity(userActivity);
+        }
+
+        // Verificar SharedPreferences
+
     }
 }
