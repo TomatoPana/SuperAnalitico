@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "921536003947",
+    "project_id": "superanalitico",
+    "storage_bucket": "superanalitico.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921536003947:android:6eb16007ff197c8d04962e",
+        "android_client_info": {
+          "package_name": "com.example.superanalitico"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921536003947-0uqadml91suq8sh76ne75dl5bl4ffo7r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSd-DmpOMo8RX6BsbpK2thNwss5tBGwnM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921536003947-0uqadml91suq8sh76ne75dl5bl4ffo7r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
