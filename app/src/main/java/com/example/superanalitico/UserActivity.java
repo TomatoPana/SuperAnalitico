@@ -2,13 +2,18 @@ package com.example.superanalitico;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Spinner;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -23,23 +28,54 @@ import java.util.Objects;
 
 public class UserActivity extends AppCompatActivity {
 
+    private static final String SELECTION = "SELECTION";
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        outState.putInt(SELECTION, bottomNavigation.getSelectedItemId());
+    }
+
+    private void showFragment(Fragment frg) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, frg)
+                .commit();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        // getAllDocuments();
-        // getDocument("1");
-        // createDocument();
-        // Exchange info = new Exchange();
-        // info.amount = 20000;
-        // info.created_at = new Date();
-        // info.description = "Another";
-        // info.exchange_type = "daily";
-        // info.subcategory = new ArrayList<>();
-        // info.subcategory.add("Element");
-        // info.updated_at = new Date();
-        // editDocument("1", info);
-        // deleteDocument("1");
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.page_1:
+                        showFragment(CreateUserDataFragment.newInstance(R.drawable.ic_favorite));
+                        break;
+                    case R.id.page_2:
+                        showFragment(ShowUserDataFragment.newInstance(R.drawable.ic_music));
+                        break;
+                    case R.id.page_3:
+                        showFragment(ShowUserDashboardFragment.newInstance(R.drawable.ic_news));
+                        break;
+                    case R.id.page_4:
+                        showFragment(ShowUserStepsFragment.newInstance(R.drawable.ic_places));
+                        break;
+                }
+                return true;
+            }
+        });
+
+        if (savedInstanceState == null) {
+            bottomNavigation.setSelectedItemId(R.id.page_1);
+        } else {
+            bottomNavigation.setSelectedItemId(savedInstanceState.getInt(SELECTION));
+        }
     }
 
     protected void getAllDocuments() {
