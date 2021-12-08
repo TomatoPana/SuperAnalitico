@@ -3,20 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/SuperAnalitico/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/SuperAnalitico/app/src/main/res/layout/activity_user.xml" value="0.1" />
+        <entry key="..\:/SuperAnalitico/app/src/main/res/layout/fragment_create_user_data.xml" value="0.22" />
         <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/layout/activity_main.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/layout/activity_user.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/layout/activity_user_admin.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/layout/activity_user_analitic.xml" value="0.20260416666666667" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/layout/activity_user.xml" value="0.2" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/layout/fragment_create_user_data.xml" value="0.26902173913043476" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/layout/fragment_show_user_dashboard.xml" value="0.26902173913043476" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/layout/fragment_show_user_data.xml" value="0.26902173913043476" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/layout/fragment_show_user_steps.xml" value="0.26902173913043476" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.15625" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
