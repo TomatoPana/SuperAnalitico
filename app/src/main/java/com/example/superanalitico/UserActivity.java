@@ -8,8 +8,11 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Spinner;
 
+import com.example.superanalitico.usersection.CreateUserDataFragment;
+import com.example.superanalitico.usersection.ShowUserDashboardFragment;
+import com.example.superanalitico.usersection.ShowUserDataFragment;
+import com.example.superanalitico.usersection.ShowUserStepsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
