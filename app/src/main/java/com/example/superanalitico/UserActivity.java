@@ -31,7 +31,7 @@ public class UserActivity extends AppCompatActivity {
     private static final String SELECTION = "SELECTION";
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         outState.putInt(SELECTION, bottomNavigation.getSelectedItemId());
