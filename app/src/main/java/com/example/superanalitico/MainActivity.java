@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     EditText emailText;
     EditText passwordText;
     Button loginButton;
+    Button registerButton;
     FirebaseAuth mAuth;
     boolean isLogged;
     FirebaseFirestore mDatabase;
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         if(!verifyLoginStatus()){
             setContentView(R.layout.activity_main);
             loginButton = findViewById(R.id.button);
+            registerButton = findViewById(R.id.button2);
             emailText = findViewById(R.id.editTextTextEmailAddress);
             passwordText = findViewById(R.id.editTextTextPassword);
             isLogged = false; // Only for pre initializing
@@ -130,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
                 if(mAuth.getCurrentUser() != null) {
                     Toast.makeText(this, "Incorrect User or Password", Toast.LENGTH_LONG).show();
                 }
+            });
+            registerButton.setOnClickListener(view -> {
+                Intent intent = new Intent(this, RegisterActivity.class);
+                startActivity(intent);
             });
         }
     }
