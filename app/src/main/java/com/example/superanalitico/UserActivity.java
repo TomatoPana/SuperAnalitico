@@ -100,7 +100,7 @@ public class UserActivity extends AppCompatActivity {
                     Log.d("FirebaseUtil", String.valueOf(info.get(0).amount));
                     Log.d("FirebaseUtil", info.get(0).created_at.toString());
                     Log.d("FirebaseUtil", String.valueOf(info.get(0).description));
-                    Log.d("FirebaseUtil", String.valueOf(info.get(0).exchange_type));
+                    Log.d("FirebaseUtil", String.valueOf(info.get(0).category));
                     Log.d("FirebaseUtil", info.get(0).subcategory.toString());
                     Log.d("FirebaseUtil", info.get(0).updated_at.toString());
                 }
@@ -122,9 +122,8 @@ public class UserActivity extends AppCompatActivity {
         info.amount = 20000;
         info.created_at = new Date();
         info.description = "Another";
-        info.exchange_type = "daily";
-        info.subcategory = new ArrayList<>();
-        info.subcategory.add("Element");
+        info.category = "daily";
+        info.subcategory = "Element";
         info.updated_at = new Date();
 
         data.add(info).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -155,7 +154,7 @@ public class UserActivity extends AppCompatActivity {
                     Log.d("FirebaseUtil", String.valueOf(info.amount));
                     Log.d("FirebaseUtil", info.created_at.toString());
                     Log.d("FirebaseUtil", String.valueOf(info.description));
-                    Log.d("FirebaseUtil", String.valueOf(info.exchange_type));
+                    Log.d("FirebaseUtil", String.valueOf(info.category));
                     Log.d("FirebaseUtil", info.subcategory.toString());
                     Log.d("FirebaseUtil", info.updated_at.toString());
                 }

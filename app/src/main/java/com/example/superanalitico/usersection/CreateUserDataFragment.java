@@ -19,8 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.superanalitico.R;
+import com.example.superanalitico.orm.Exchange;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -245,10 +247,37 @@ public class CreateUserDataFragment extends Fragment {
         saveButton.setOnClickListener(buttonView -> {
             String category = (String) spinnerCategory.getSelectedItem();
             String subcategory = (String) spinnerSubcategory.getSelectedItem();
+            String description = editTextDescription.getText().toString();
             try {
                 double amount = Double.parseDouble(editTextAmount.getText().toString());
                 amount = Math.round(amount * 100.0) / 100.0;
                 int exactAmount = (int) amount * 100;
+                Exchange exchange = new Exchange();
+                exchange.amount = exactAmount;
+                exchange.subcategory = subcategory;
+                exchange.category = category;
+                exchange.created_at = new Date();
+                exchange.updated_at = new Date();
+                exchange.description = description;
+
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+
+                FirebaseFirestore mFirebase = FirebaseFirestore.getInstance();
+                DocumentReference database = mFirebase.collection("users").document(uid);
+
+                CollectionReference data = database.collection("exchanges");
+
+                String pattern = "yyyy-MM-dd";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+                String date = simpleDateFormat.format(new Date());
+
+                data.document(date).collection("data").add(exchange).addOnCompleteListener(task -> {
+                   if(task.isSuccessful()) {
+                       Snackbar.make(view, "Guardado exitoso!", Snackbar.LENGTH_LONG).show();
+                   }
+                });
 
             } catch (Exception e) {
                 editTextAmount.setError("Ingresa una cantidad valida");

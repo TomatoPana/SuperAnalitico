@@ -3,5 +3,5 @@
     <item
         android:id="@+id/logout"
         android:enabled="true"
-        android:title="Logout"/>
+        android:title="Cerrar Sesion"/>
 </menu>

@@ -26,8 +26,7 @@
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:autofillHints="" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <EditText
             android:id="@+id/editTextLastName"
@@ -42,8 +41,7 @@
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFirstName"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextFirstName" />
 
         <EditText
             android:id="@+id/editTextAge"
@@ -58,8 +56,7 @@
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextLastName"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextLastName" />
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -74,8 +71,7 @@
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextAge"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextAge" />
 
         <EditText
             android:id="@+id/editTextPassword"
@@ -90,8 +86,7 @@
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
         <EditText
             android:id="@+id/editTextConfirmPassword"
@@ -106,8 +101,7 @@
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
         <Button
             android:id="@+id/btnGoBack"
