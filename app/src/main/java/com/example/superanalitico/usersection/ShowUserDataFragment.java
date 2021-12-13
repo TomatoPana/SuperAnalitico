@@ -3,13 +3,34 @@ package com.example.superanalitico.usersection;
 import android.os.Bundle;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.superanalitico.R;
+import com.example.superanalitico.utils.UserExchangesDataAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,7 +61,42 @@ public class ShowUserDataFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_show_user_data, container, false);
 
+        List<Map<String, Object>> allData = new ArrayList<>();
 
+        RecyclerView userExchangesData = view.findViewById(R.id.userExchangesData);
+        userExchangesData.setHasFixedSize(false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        userExchangesData.setLayoutManager(layoutManager);
+
+        UserExchangesDataAdapter adapter = new UserExchangesDataAdapter(allData, getContext());
+        userExchangesData.setAdapter(adapter);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+
+        FirebaseFirestore mFirebase = FirebaseFirestore.getInstance();
+        DocumentReference database = mFirebase.collection("users").document(uid);
+
+        CollectionReference data = database.collection("exchanges");
+
+
+
+        data.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                    Log.d("TAG", document.getId() + " => " + document.getData());
+                    document.getReference().collection("data").get().addOnCompleteListener(innerTask -> {
+                        if(innerTask.isSuccessful()) {
+                            for(QueryDocumentSnapshot innerDocument : Objects.requireNonNull(innerTask.getResult())) {
+                                Log.d("TAG", innerDocument.getId() + " => " + innerDocument.getData());
+                                allData.add(innerDocument.getData());
+                                adapter.notifyItemChanged(allData.size());
+                            }
+                        }
+                    });
+                }
+            }
+        });
 
         return view;
     }
