@@ -5,16 +5,12 @@
       <map>
         <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/layout/activity_main.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/layout/activity_user.xml" value="0.20260416666666667" />
-        <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/layout/activity_user_admin.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/layout/activity_user_admin.xml" value="0.3625" />
         <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/layout/activity_user_analitic.xml" value="0.20260416666666667" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/layout/activity_main.xml" value="0.26902173913043476" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/layout/activity_register.xml" value="0.26902173913043476" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/layout/activity_user.xml" value="0.2" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/layout/fragment_create_user_data.xml" value="0.26902173913043476" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/layout/fragment_show_user_dashboard.xml" value="0.26902173913043476" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/layout/fragment_show_user_data.xml" value="0.26902173913043476" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/layout/fragment_show_user_steps.xml" value="0.26902173913043476" />
-        <entry key="..\:/Users/mdlbl/StudioProjects/SuperAnalitico/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.15625" />
+        <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/layout/fragment_create_user_data.xml" value="0.3625" />
+        <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/layout/item_users_admin_view.xml" value="0.3625" />
+        <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3625" />
+        <entry key="..\:/Users/mdlbl/AndroidStudioProjects/SuperAnalitico/app/src/main/res/menu/top_app_bar.xml" value="0.3625" />
       </map>
     </option>
   </component>
