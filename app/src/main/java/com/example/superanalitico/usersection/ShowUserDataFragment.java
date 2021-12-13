@@ -68,7 +68,9 @@ public class ShowUserDataFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         userExchangesData.setLayoutManager(layoutManager);
 
-        UserExchangesDataAdapter adapter = new UserExchangesDataAdapter(allData, getContext());
+
+
+        UserExchangesDataAdapter adapter = new UserExchangesDataAdapter(allData, getContext(), requireActivity().getSupportFragmentManager());
         userExchangesData.setAdapter(adapter);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -78,8 +80,6 @@ public class ShowUserDataFragment extends Fragment {
         DocumentReference database = mFirebase.collection("users").document(uid);
 
         CollectionReference data = database.collection("exchanges");
-
-
 
         data.get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
