@@ -1,4 +1,4 @@
-package com.example.superanalitico;
+package com.example.superanalitico.orm;
 
 import java.util.Date;
 import java.util.List;

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.superanalitico.orm.Exchange;
 import com.example.superanalitico.usersection.CreateUserDataFragment;
 import com.example.superanalitico.usersection.ShowUserDashboardFragment;
 import com.example.superanalitico.usersection.ShowUserDataFragment;
