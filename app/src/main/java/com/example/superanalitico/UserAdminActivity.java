@@ -4,31 +4,50 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.superanalitico.orm.Users;
 import com.example.superanalitico.utils.DataAdapter;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class UserAdminActivity extends AppCompatActivity {
 
     private MaterialToolbar topAppBar;
     private RecyclerView usersRecyclerView;
     private DataAdapter adapter;
+    FirebaseAuth mAuth;
+    SharedPreferences savedUserData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_admin);
+
+        mAuth = FirebaseAuth.getInstance();
+        savedUserData = getSharedPreferences("savedUserData", MODE_PRIVATE);
         topAppBar = findViewById(R.id.topAppBar);
 
         topAppBar.setOnMenuItemClickListener(item -> {
-            if ("Logout".equals(item.getTitle().toString())) {
-                Toast.makeText(UserAdminActivity.this, "Logging out", Toast.LENGTH_LONG).show();
+            if ("Cerrar Sesion".equals(item.getTitle().toString())) {
+                mAuth.signOut();
+                SharedPreferences.Editor writer = savedUserData.edit();
+                writer.clear();
+                writer.apply();
+                Intent logoutIntent = new Intent(this, MainActivity.class);
+                startActivity(logoutIntent);
                 return true;
             }
             return false;
@@ -39,27 +58,9 @@ public class UserAdminActivity extends AppCompatActivity {
         initializeRecyclerView();
     }
 
-    protected List<Users> getAllUserInfoFromFirebase() {
-        List<Users> usersDataSet = new ArrayList<>();
-
-
-
-        return usersDataSet;
-    }
-
     protected void initializeRecyclerView() {
 
-        List<Users> usersDataSet = new ArrayList<>();
-        usersDataSet.add(new Users("Lozano Bobadilla", "Moises David", Users.USER, "mdlb.lobo@gmail.com"));
-        usersDataSet.add(new Users("Lozano Bobadilla", "Moises David", Users.USER, "mdlb.lobo@gmail.com"));
-        usersDataSet.add(new Users("Lozano Bobadilla", "Moises David", Users.USER, "mdlb.lobo@gmail.com"));
-        usersDataSet.add(new Users("Lozano Bobadilla", "Moises David", Users.USER, "mdlb.lobo@gmail.com"));
-        usersDataSet.add(new Users("Lozano Bobadilla", "Moises David", Users.USER, "mdlb.lobo@gmail.com"));
-        usersDataSet.add(new Users("Lozano Bobadilla", "Moises David", Users.USER, "mdlb.lobo@gmail.com"));
-        usersDataSet.add(new Users("Lozano Bobadilla", "Moises David", Users.USER, "mdlb.lobo@gmail.com"));
-        usersDataSet.add(new Users("Lozano Bobadilla", "Moises David", Users.USER, "mdlb.lobo@gmail.com"));
-        usersDataSet.add(new Users("Lozano Bobadilla", "Moises David", Users.USER, "mdlb.lobo@gmail.com"));
-        usersDataSet.add(new Users("Lozano Bobadilla", "Moises David", Users.USER, "mdlb.lobo@gmail.com"));
+        List<Map<String, Object>> usersDataSet = new ArrayList<>();
 
         usersRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getBaseContext());
@@ -67,6 +68,19 @@ public class UserAdminActivity extends AppCompatActivity {
 
         adapter = new DataAdapter(usersDataSet, getBaseContext());
         usersRecyclerView.setAdapter(adapter);
+
+        FirebaseFirestore mFirebase = FirebaseFirestore.getInstance();
+        CollectionReference database = mFirebase.collection("users");
+        database.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                for (QueryDocumentSnapshot documentSnapshot:
+                        Objects.requireNonNull(task.getResult())) {
+                    Map<String, Object> user = documentSnapshot.getData();
+                    usersDataSet.add(user);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
 
     }
 }

@@ -20,14 +20,15 @@ import com.google.firebase.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class UserDashboardDataAdapter extends RecyclerView.Adapter<UserDashboardDataAdapter.ViewHolder> {
 
-    List<Map<String, Object>> allData;
+    Map<String,Map<String, Object>> allData;
     Context context;
     FragmentManager fragmentManager;
 
-    public UserDashboardDataAdapter(List<Map<String, Object>> allData, Context context, FragmentManager fragmentManager) {
+    public UserDashboardDataAdapter(Map<String,Map<String, Object>> allData, Context context, FragmentManager fragmentManager) {
         this.allData = allData;
         this.context = context;
         this.fragmentManager = fragmentManager;
@@ -56,10 +57,13 @@ public class UserDashboardDataAdapter extends RecyclerView.Adapter<UserDashboard
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Long amount = (Long) allData.get(position).get("amount");
-        Timestamp updated_at = (Timestamp) allData.get(position).get("updated_at");
-        String category = (String) allData.get(position).get("category");
-        String subcategory = (String) allData.get(position).get("subcategory");
+        Set<String> keys = allData.keySet();
+        String key = (String) keys.toArray()[position];
+
+        Long amount = (Long) allData.get(key).get("amount");
+        Timestamp updated_at = (Timestamp) allData.get(key).get("updated_at");
+        String category = (String) allData.get(key).get("category");
+        String subcategory = (String) allData.get(key).get("subcategory");
 
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -74,14 +78,16 @@ public class UserDashboardDataAdapter extends RecyclerView.Adapter<UserDashboard
             FragmentManager fragmentManager = this.fragmentManager;
             EditUserDataDialogFragment newFragment = new EditUserDataDialogFragment();
 
-                // The device is smaller, so show the fragment fullscreen
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                // For a little polish, specify a transition animation
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                // To make it fullscreen, use the 'content' root view as the container
-                // for the fragment, which is always the root view for the activity
-                transaction.add(android.R.id.content, newFragment)
-                        .addToBackStack(null).commit();
+
+
+            // The device is smaller, so show the fragment fullscreen
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            // For a little polish, specify a transition animation
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            // To make it fullscreen, use the 'content' root view as the container
+            // for the fragment, which is always the root view for the activity
+            transaction.add(android.R.id.content, newFragment)
+                    .addToBackStack(null).commit();
         });
 
         holder.deleteButton.setOnClickListener(v -> {

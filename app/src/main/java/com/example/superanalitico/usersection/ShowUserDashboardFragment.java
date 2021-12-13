@@ -35,6 +35,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -70,7 +71,7 @@ public class ShowUserDashboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_show_user_dashboard, container, false);
         Button button = view.findViewById(R.id.button4);
         TextView textView = view.findViewById(R.id.textView6);
-        List<Map<String, Object>> allData = new ArrayList<>();
+        Map<String,Map<String, Object>> allData = new HashMap<>();
 
         RecyclerView dashboardRecyclerView = view.findViewById(R.id.dashboardRecyclerView);
         dashboardRecyclerView.setHasFixedSize(false);
@@ -119,7 +120,8 @@ public class ShowUserDashboardFragment extends Fragment {
                                   adapter.notifyDataSetChanged();
                                   for (DocumentSnapshot document :
                                           Objects.requireNonNull(innerTask.getResult()).getDocuments()) {
-                                      allData.add(document.getData());
+                                      //allData.add(document.getData());
+                                      allData.put(document.getId(), document.getData());
                                       adapter.notifyDataSetChanged();
                                   }
                               }

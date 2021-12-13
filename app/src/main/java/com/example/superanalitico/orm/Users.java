@@ -6,32 +6,39 @@ public class Users {
     public static final String ADMIN = "admin";
     public static final String ANALYTIC = "analytic";
 
-    private String lastNames;
-    private String firstNames;
-    private String user_type;
-    private String email;
+    public String last_names;
+    public String first_names;
+    public String user_type;
+    public String email;
+
+    public Users() {
+        this.last_names = "";
+        this.first_names = "";
+        this.user_type = "user";
+        this.email = "";
+    }
 
     public Users(String lastNames, String firstNames, String user_type, String email) {
-        this.lastNames = lastNames;
-        this.firstNames = firstNames;
+        this.last_names = lastNames;
+        this.first_names = firstNames;
         this.user_type = user_type;
         this.email = email;
     }
 
     public String getLastNames() {
-        return lastNames;
+        return last_names;
     }
 
     public void setLastNames(String lastNames) {
-        this.lastNames = lastNames;
+        this.last_names = lastNames;
     }
 
     public String getFirstNames() {
-        return firstNames;
+        return first_names;
     }
 
     public void setFirstNames(String firstNames) {
-        this.firstNames = firstNames;
+        this.first_names = firstNames;
     }
 
     public String getUser_type() {

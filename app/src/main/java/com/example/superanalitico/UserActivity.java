@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.superanalitico.orm.Exchange;
 import com.example.superanalitico.usersection.CreateUserDataFragment;
@@ -16,6 +19,7 @@ import com.example.superanalitico.usersection.ShowUserDataFragment;
 import com.example.superanalitico.usersection.ShowUserStepsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +37,9 @@ import java.util.Objects;
 public class UserActivity extends AppCompatActivity {
 
     private static final String SELECTION = "SELECTION";
+    private MaterialToolbar topAppBar;
+    FirebaseAuth mAuth;
+    SharedPreferences savedUserData;
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -48,10 +55,30 @@ public class UserActivity extends AppCompatActivity {
                 .commit();
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        mAuth = FirebaseAuth.getInstance();
+        savedUserData = getSharedPreferences("savedUserData", MODE_PRIVATE);
+        topAppBar = findViewById(R.id.topAppBar);
+
+        topAppBar.setOnMenuItemClickListener(item -> {
+            if ("Cerrar Sesion".equals(item.getTitle().toString())) {
+                mAuth.signOut();
+                SharedPreferences.Editor writer = savedUserData.edit();
+                writer.clear();
+                writer.apply();
+                Intent logoutIntent = new Intent(this, MainActivity.class);
+                startActivity(logoutIntent);
+                return true;
+            }
+            return false;
+        });
+
+
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")

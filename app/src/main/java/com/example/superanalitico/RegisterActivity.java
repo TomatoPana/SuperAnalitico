@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.superanalitico.orm.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -82,6 +83,17 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    private void createUserData(String Uid) {
+        mDatabase = FirebaseFirestore.getInstance();
+        CollectionReference userCollection = mDatabase.collection("users");
+        DocumentReference userDocument = userCollection.document(Uid);
+        userDocument.set(new Users(editTextLastName.getText().toString(), editTextFirstName.getText().toString(), "user", editTextEmail.getText().toString())).addOnCompleteListener(task -> {
+            if(!task.isSuccessful()) {
+                Log.d("TAG", "Something happened: " + task.getException());
+            }
+        });
+    }
+
     public void onRegisterClickListener(View view) {
         if(editTextFirstName.getText().length() == 0) {
             editTextFirstName.setError("This field cannot be empty");
@@ -118,12 +130,14 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("Register", Objects.requireNonNull(task.getResult()).toString());
                 mAuth.signInWithEmailAndPassword(editTextEmail.getText().toString(), editTextConfirmPassword.getText().toString()).addOnCompleteListener(loginTask -> {
                     if(task.isSuccessful()){
+                        savedUserData = getSharedPreferences("savedUserData", MODE_PRIVATE);
                         SharedPreferences.Editor writer = savedUserData.edit();
                         writer.putString("email", editTextEmail.getText().toString());
                         writer.putString("password", editTextConfirmPassword.getText().toString());
                         writer.apply();
                         FirebaseUser user = mAuth.getCurrentUser();
                         assert user != null;
+                        createUserData(mAuth.getCurrentUser().getUid());
                         redirectLoggedUser(mAuth.getCurrentUser().getUid());
                     }
                 });

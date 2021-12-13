@@ -61,7 +61,7 @@ public class ShowUserDataFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_show_user_data, container, false);
 
-        List<Map<String, Object>> allData = new ArrayList<>();
+        Map<String,Map<String, Object>> allData = new HashMap<>();
 
         RecyclerView userExchangesData = view.findViewById(R.id.userExchangesData);
         userExchangesData.setHasFixedSize(false);
@@ -89,7 +89,7 @@ public class ShowUserDataFragment extends Fragment {
                         if(innerTask.isSuccessful()) {
                             for(QueryDocumentSnapshot innerDocument : Objects.requireNonNull(innerTask.getResult())) {
                                 Log.d("TAG", innerDocument.getId() + " => " + innerDocument.getData());
-                                allData.add(innerDocument.getData());
+                                allData.put(innerDocument.getId(), innerDocument.getData());
                                 adapter.notifyItemChanged(allData.size());
                             }
                         }
