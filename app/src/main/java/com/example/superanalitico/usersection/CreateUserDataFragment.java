@@ -1,10 +1,15 @@
 package com.example.superanalitico.usersection;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -34,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +48,7 @@ import java.util.Objects;
  */
 public class CreateUserDataFragment extends Fragment {
 
+    private static final String CHANNEL_ID = "1";
     ConstraintLayout mainConstraintLayout;
     ConstraintLayout secondConstraintLayout;
     Spinner spinnerCategory;
@@ -273,11 +280,59 @@ public class CreateUserDataFragment extends Fragment {
 
                 String date = simpleDateFormat.format(new Date());
 
-                data.document(date).collection("data").add(exchange).addOnCompleteListener(task -> {
-                   if(task.isSuccessful()) {
-                       Snackbar.make(view, "Guardado exitoso!", Snackbar.LENGTH_LONG).show();
-                   }
+                data.document(date).get().addOnCompleteListener(task1 -> {
+                    if(task1.isSuccessful()) {
+                        try {
+                            int budget = Objects.requireNonNull(Objects.requireNonNull(task1.getResult()).getLong("budget")).intValue();
+                            int remaining = Objects.requireNonNull(Objects.requireNonNull(task1.getResult()).getLong("remaining")).intValue();
+
+
+                            data.document(date).collection("data").add(exchange).addOnCompleteListener(task -> {
+                                if(task.isSuccessful()) {
+                                    editTextAmount.setText("");
+                                    editTextDescription.setText("");
+                                    HashMap<String, Integer> postData = new HashMap<>();
+                                    int newRemaining = remaining - exactAmount;
+                                    postData.put("remaining", newRemaining);
+                                    postData.put("budget", budget);
+                                    if(newRemaining < 0) {
+                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+                                                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                                                .setContentTitle("Presupuesto excedido!")
+                                                .setContentText("Se ha excedido el presupuesto por la cantidad de " + (newRemaining * -1)/100 + " pesos.")
+                                                .setStyle(new NotificationCompat.BigTextStyle()
+                                                        .bigText("Se ha excedido el presupuesto por la cantidad de " + (newRemaining * -1)/100 + " pesos."))
+                                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                            CharSequence name = "Info";
+                                            String descriptionNotification = "Information of the app";
+                                            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                                            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+                                            channel.setDescription(descriptionNotification);
+                                            // Register the channel with the system; you can't change the importance
+                                            // or other notification behaviors after this
+                                            NotificationManager notificationManager = requireActivity().getSystemService(NotificationManager.class);
+                                            notificationManager.createNotificationChannel(channel);
+                                        }
+
+                                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(requireContext());
+                                        notificationManager.notify(new Random().nextInt(1000000), builder.build());
+                                    }
+                                    data.document(date).set(postData).addOnCompleteListener(task2 -> {
+                                        if(task2.isSuccessful()) {
+                                            Snackbar.make(view, "Guardado exitoso!", Snackbar.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            });
+                        } catch (Exception e) {
+                            Snackbar.make(view, "Algo salio mal! " + e.getMessage(), Snackbar.LENGTH_LONG).show();
+                        }
+                    }
                 });
+
+
 
             } catch (Exception e) {
                 editTextAmount.setError("Ingresa una cantidad valida");
