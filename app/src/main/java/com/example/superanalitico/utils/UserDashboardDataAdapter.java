@@ -13,20 +13,21 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Map;
 import com.example.superanalitico.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.Timestamp;
 
-public class UserExchangesDataAdapter extends RecyclerView.Adapter<UserExchangesDataAdapter.ViewHolder> {
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
+
+public class UserDashboardDataAdapter extends RecyclerView.Adapter<UserDashboardDataAdapter.ViewHolder> {
 
     List<Map<String, Object>> allData;
     Context context;
     FragmentManager fragmentManager;
 
-    public UserExchangesDataAdapter(List<Map<String, Object>> allData, Context context, FragmentManager fragmentManager) {
+    public UserDashboardDataAdapter(List<Map<String, Object>> allData, Context context, FragmentManager fragmentManager) {
         this.allData = allData;
         this.context = context;
         this.fragmentManager = fragmentManager;
