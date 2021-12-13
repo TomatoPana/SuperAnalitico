@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
                         assert user != null;
                         redirectLoggedUser(mAuth.getCurrentUser().getUid());
+                    } else {
+                        Toast.makeText(this, "Incorrect User or Password", Toast.LENGTH_LONG).show();
                     }
                 });
     }
